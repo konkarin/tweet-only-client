@@ -10,10 +10,8 @@ const firebaseConfig = {
 };
 
 import { getApps, initializeApp } from "firebase/app";
-import "firebase/auth";
 
 // Initialize Firebase
-// NOTE: SSGだとこれいれないと複数回初期化されるっぽい
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
 }

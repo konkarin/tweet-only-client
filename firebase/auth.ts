@@ -5,8 +5,12 @@ import {
   TwitterAuthProvider,
 } from "firebase/auth";
 
-const provider = new TwitterAuthProvider();
+export interface credentials {
+  token: string;
+  secret: string;
+}
 
+const provider = new TwitterAuthProvider();
 const auth = getAuth();
 
 export const loginTwitter = async () => {
@@ -29,7 +33,7 @@ export const loginTwitter = async () => {
 
   if (token == null || secret == null) return null;
 
-  return { token, secret };
+  return { token, secret } as credentials;
 };
 
 export const authStateChange = () => {
