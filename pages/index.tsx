@@ -1,34 +1,45 @@
+import axios from "axios";
 import Head from "next/head";
 import { useState } from "react";
-import { statusesUpdate } from "../api/twitter";
-import { authStateChange, loginTwitter, logoutTwitter } from "../firebase/auth";
+import { loginTwitter, logoutTwitter } from "../firebase/auth";
 import styles from "../styles/Home.module.css";
 
-authStateChange();
-
 export default function Home() {
-  const [token, setToken] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [credentials, setCredentials] = useState({ token: "", secret: "" });
   const [isAuth, setIsAuth] = useState(false);
 
   const login = async () => {
     const credentials = await loginTwitter();
-    console.log(credentials);
 
     if (credentials == null) return;
 
-    setToken(credentials.token);
+    setCredentials(credentials);
     setIsAuth(true);
   };
 
   const logout = async () => {
     await logoutTwitter();
 
-    setToken("");
+    setCredentials({ token: "", secret: "" });
     setIsAuth(false);
   };
 
-  const tweet = async () => {
-    await statusesUpdate(token);
+  const post = async () => {
+    const url = "/api/post";
+    const data = {
+      status: inputValue,
+      credentials,
+    };
+
+    const result = await axios.post(url, data).catch((e) => e);
+    console.log(result);
+
+    setInputValue("");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
@@ -43,7 +54,12 @@ export default function Home() {
         {isAuth ? (
           <div>
             <button onClick={() => logout()}>logout</button>
-            <button onClick={() => tweet()}>tweet</button>
+            <div>
+              <input type="text" value={inputValue} onChange={handleChange} />
+            </div>
+            <div>
+              <button onClick={() => post()}>tweet</button>
+            </div>
           </div>
         ) : (
           <div>
