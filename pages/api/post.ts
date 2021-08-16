@@ -1,23 +1,31 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { statusesUpdate } from "../../api/twitter";
-import { credentials } from "../../firebase/auth";
+import { getCredentials, verifyIdToken } from "../../firebase/admin";
 
-type Data = {
+interface Data {
   message: string;
   status?: string;
   error?: {
     code: number;
     message: string;
   };
-};
+}
+
+interface Body {
+  status: string;
+  idToken: string;
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const status = req.body.status as string;
-  const credentials = req.body.credentials as credentials;
+  const { status, idToken } = req.body as Body;
+
+  const uid = await verifyIdToken(idToken);
+
+  const credentials = await getCredentials(uid);
 
   const result = await statusesUpdate(status, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);

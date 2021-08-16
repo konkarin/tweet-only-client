@@ -1,3 +1,4 @@
+import { User } from "@firebase/auth";
 import axios from "axios";
 import Head from "next/head";
 import { useState } from "react";
@@ -5,31 +6,31 @@ import { loginTwitter, logoutTwitter } from "../firebase/auth";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const [user, setUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState("");
-  const [credentials, setCredentials] = useState({ token: "", secret: "" });
   const [isAuth, setIsAuth] = useState(false);
 
   const login = async () => {
-    const credentials = await loginTwitter();
+    const user = await loginTwitter();
 
-    if (credentials == null) return;
-
-    setCredentials(credentials);
+    if (user == null) return;
+    setUser(user);
     setIsAuth(true);
   };
 
   const logout = async () => {
     await logoutTwitter();
-
-    setCredentials({ token: "", secret: "" });
+    setUser(null);
     setIsAuth(false);
   };
 
   const post = async () => {
+    if (!user) return;
+
     const url = "/api/post";
     const data = {
+      idToken: user.getIdToken(),
       status: inputValue,
-      credentials,
     };
 
     const result = await axios.post(url, data).catch((e) => e);

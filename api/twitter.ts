@@ -1,7 +1,7 @@
 import axios from "axios";
 import crypto from "crypto";
 
-interface credentials {
+export interface credentials {
   token: string;
   secret: string;
 }
