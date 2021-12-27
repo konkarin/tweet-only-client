@@ -1,13 +1,10 @@
-import axios from "axios";
 import Head from "next/head";
-import { useState } from "react";
+import TweetForm from "../components/TweetForm";
 import { loginTwitter, logoutTwitter } from "../firebase/auth";
 import { useUser } from "../hooks/user";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
-
   const user = useUser();
 
   const login = async () => {
@@ -16,25 +13,6 @@ export default function Home() {
 
   const logout = async () => {
     await logoutTwitter();
-  };
-
-  const post = async () => {
-    if (!user || inputValue === "") return;
-
-    const url = "/api/post";
-    const data = {
-      idToken: await user.getIdToken(),
-      status: inputValue,
-    };
-
-    const result = await axios.post(url, data).catch((e) => e);
-    console.log(result);
-
-    setInputValue("");
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
   };
 
   return (
@@ -48,13 +26,8 @@ export default function Home() {
       <main className={styles.main}>
         {user ? (
           <div>
+            <TweetForm user={user} />
             <button onClick={() => logout()}>logout</button>
-            <div>
-              <input type="text" value={inputValue} onChange={handleChange} />
-            </div>
-            <div>
-              <button onClick={() => post()}>tweet</button>
-            </div>
           </div>
         ) : (
           <div>

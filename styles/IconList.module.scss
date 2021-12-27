@@ -1,0 +1,15 @@
+.iconList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.iconList__Wrapper {
+  :not(:first-child) {
+    margin-left: 10px;
+  }
+}
+
+.iconList__item {
+  border-radius: 100%;
+}
