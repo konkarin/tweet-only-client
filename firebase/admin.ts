@@ -1,10 +1,10 @@
 import admin from "firebase-admin";
-import { credentials } from "../api/twitter";
 
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY,
+    // @ts-ignore
+    privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, "\n"),
     clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
   }),
 });
@@ -14,9 +14,21 @@ export const verifyIdToken = async (idToken: string) => {
   return decodedIdToken.uid;
 };
 
-export const getCredentials = async (uid: string) => {
-  // firestoreからuidでcredentilasを取得
-  // DEBUG:
-  const credentials: credentials = { token: "", secret: "" };
-  return credentials;
+export const getCredentials = (uid: string) => {
+  if (uid === process.env.UID_1) {
+    return {
+      token: process.env.OAUTH_TOKEN_1,
+      secret: process.env.OAUTH_TOKEN_SECRET_1,
+    };
+  } else if (uid === process.env.UID_2) {
+    return {
+      token: process.env.OAUTH_TOKEN_2,
+      secret: process.env.OAUTH_TOKEN_SECRET_2,
+    };
+  } else {
+    return {
+      token: "",
+      secret: "",
+    };
+  }
 };

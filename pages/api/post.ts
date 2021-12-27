@@ -23,9 +23,14 @@ export default async function handler(
 ) {
   const { status, idToken } = req.body as Body;
 
+  // TODO: error起こる？
   const uid = await verifyIdToken(idToken);
 
-  const credentials = await getCredentials(uid);
+  const credentials = getCredentials(uid);
+
+  if (credentials.token === "" || credentials.secret === "") {
+    res.status(403).json({ message: "Forbidden" });
+  }
 
   const result = await statusesUpdate(status, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);
@@ -33,12 +38,12 @@ export default async function handler(
   });
 
   if (result == null) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(400).json({ message: "Bad Request" });
   } else if (result.status === 200) {
-    res.status(200).json({ message: "posted", status });
+    res.status(200).json({ message: "Posted", status });
   } else {
     res
       .status(result.status)
-      .json({ message: "posted failed", error: result.data.errors });
+      .json({ message: "Posted failed", error: result.data.errors });
   }
 }
