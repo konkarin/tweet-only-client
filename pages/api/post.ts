@@ -23,14 +23,14 @@ export default async function handler(
 ) {
   const { status, idToken } = req.body as Body;
 
-  // TODO: error起こる？
   const uid = await verifyIdToken(idToken);
 
-  const credentials = getCredentials(uid);
-
-  if (credentials.token === "" || credentials.secret === "") {
+  if (uid === "") {
     res.status(403).json({ message: "Forbidden" });
+    return;
   }
+
+  const credentials = getCredentials(uid);
 
   const result = await statusesUpdate(status, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);
