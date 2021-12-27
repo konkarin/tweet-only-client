@@ -1,9 +1,4 @@
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithPopup,
-  TwitterAuthProvider,
-} from "firebase/auth";
+import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
 export interface credentials {
   token: string;
@@ -32,18 +27,9 @@ export const loginTwitter = async () => {
   // const secret = credential.secret;
 
   // if (token == null || secret == null) return null;
+  console.log(result);
 
   return result.user;
-};
-
-export const authStateChange = () => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("signed in", user);
-    } else {
-      console.log("signed out");
-    }
-  });
 };
 
 export const logoutTwitter = async () => {

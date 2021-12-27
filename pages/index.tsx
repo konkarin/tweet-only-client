@@ -1,35 +1,29 @@
-import { User } from "@firebase/auth";
 import axios from "axios";
 import Head from "next/head";
 import { useState } from "react";
 import { loginTwitter, logoutTwitter } from "../firebase/auth";
+import { useUser } from "../hooks/user";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState("");
-  const [isAuth, setIsAuth] = useState(false);
+
+  const user = useUser();
 
   const login = async () => {
-    const user = await loginTwitter();
-
-    if (user == null) return;
-    setUser(user);
-    setIsAuth(true);
+    await loginTwitter();
   };
 
   const logout = async () => {
     await logoutTwitter();
-    setUser(null);
-    setIsAuth(false);
   };
 
   const post = async () => {
-    if (!user) return;
+    if (!user || inputValue === "") return;
 
     const url = "/api/post";
     const data = {
-      idToken: user.getIdToken(),
+      idToken: await user.getIdToken(),
       status: inputValue,
     };
 
@@ -52,7 +46,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {isAuth ? (
+        {user ? (
           <div>
             <button onClick={() => logout()}>logout</button>
             <div>
