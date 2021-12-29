@@ -4,12 +4,30 @@
   justify-content: flex-start;
 }
 
-.iconList__Wrapper {
-  :not(:first-child) {
+.iconList__item {
+  &:not(:first-child) {
     margin-left: 10px;
+  }
+  & input[type="radio"]:checked + label img {
+    border: 2px solid red;
   }
 }
 
-.iconList__item {
+.iconList__itemButton {
+  display: none;
+}
+
+.iconList__itemLabel {
+  display: flex;
+}
+
+.iconList__icon {
+  height: 48px;
+  width: 48px;
   border-radius: 100%;
+  opacity: 0.5;
+}
+
+.iconList__icon--active {
+  opacity: 1;
 }
