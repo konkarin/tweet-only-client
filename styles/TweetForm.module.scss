@@ -2,31 +2,41 @@
   padding: 0 14px;
 }
 
-.tweetForm__iconList {
-  padding: 8px 0;
-}
-
 .tweetForm__formWrapper {
   margin-top: 12px;
   padding: 10px;
   border-radius: 4px;
   border-bottom: 1px solid #38444d;
+  display: flex;
+  flex-direction: column;
 }
 
 .tweetForm__textarea {
   height: 300px;
   width: 100%;
+  color: #fff;
+  resize: none;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  line-break: anywhere;
 }
 
-.tweetForm__tweet {
-  border-radius: 9999px;
-  padding: 4px 14px;
-  background-color: rgb(255, 212, 0);
-  color: #fff;
+.tweetForm__count {
+  display: flex;
+  width: 100%;
+  margin-right: 8 px;
+  justify-content: flex-end;
+}
+
+.tweetForm__count--over {
+  color: rgb(244, 33, 46);
 }
 
 .tweetForm__controlWrapper {
   margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .tweetForm__control {
