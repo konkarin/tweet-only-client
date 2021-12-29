@@ -3,9 +3,12 @@ import TweetForm from "../components/TweetForm";
 import { loginTwitter, logoutTwitter } from "../firebase/auth";
 import { useUser } from "../hooks/user";
 import styles from "../styles/Home.module.scss";
+import Button from "../components/Button/Button";
+import TheHeader from "../components/TheHeader/TheHeader";
 
 export default function Home() {
   const user = useUser();
+  const isAuth = user !== null;
 
   const login = async () => {
     await loginTwitter();
@@ -23,15 +26,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <TheHeader user={user} />
       <main className={styles.main}>
-        {user ? (
-          <div>
-            <TweetForm user={user} />
-            <button onClick={() => logout()}>logout</button>
-          </div>
+        {isAuth ? (
+          <TweetForm user={user} />
         ) : (
-          <div>
-            <button onClick={() => login()}>login</button>
+          <div className={styles.main__unAuth}>
+            <div className={styles.main__button}>
+              <Button onClick={login} type="button" outline>
+                Log in
+              </Button>
+            </div>
           </div>
         )}
       </main>

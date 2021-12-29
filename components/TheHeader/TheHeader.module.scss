@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.header__settings {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header__settingsButton {
+  display: inline-flex;
+}
+
+.settingsPopup {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
+    rgb(136 153 166 / 15%) 0px 0px 3px 1px;
+}
+
+.settingsPopup__item {
+}
+
+.settingsPopup__link {
+  display: flex;
+  flex-direction: row;
+  padding: 14px;
+
+  &:hover {
+    background-color: rgb(25, 39, 52);
+  }
+}
+
+.settingsPopup__linkIcon {
+  display: flex;
+  margin-right: 8px;
+}
+
+.settingsPopup__linkText {
+  line-height: 24px;
+  white-space: nowrap;
+}
