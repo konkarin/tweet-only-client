@@ -8,6 +8,18 @@
   flex: 1;
 }
 
+.main__unAuth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main__button {
+  width: 300px;
+  display: flex;
+}
+
 .footer {
   width: 100%;
   height: 100px;
