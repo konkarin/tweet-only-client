@@ -1,0 +1,24 @@
+.button {
+  border-radius: 9999px;
+  padding: 4px 14px;
+  background-color: rgb(255, 212, 0);
+  border: 1px solid rgb(255, 212, 0);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  min-width: 36px;
+  min-height: 36px;
+  flex-grow: 1;
+  &:active {
+    background-color: rgb(204, 170, 0);
+    border: 1px solid rgb(204, 170, 0);
+  }
+}
+
+.button--outline {
+  background-color: transparent;
+  color: rgb(255, 212, 0);
+  &:active {
+    background-color: rgb(52, 43, 0);
+  }
+}
