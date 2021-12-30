@@ -1,7 +1,7 @@
 import styles from "./TheHeader.module.scss";
 import IconList from "../IconList";
 import Settings from "../svg/Settings";
-import { useState } from "react";
+import React, { useState } from "react";
 import { User } from "firebase/auth";
 import Logout from "../svg/Logout";
 
@@ -18,19 +18,26 @@ export default function TheHeader({ user }: Props) {
   const [showSettings, setShowSettings] = useState(false);
   const isAuth = user !== null;
 
-  const openSettings = () => {
-    showSettings ? setShowSettings(false) : setShowSettings(true);
+  const closePopup = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
 
-    // const outsideClickHandler = (e: MouseEvent) => {
-    //   console.log("close");
+    if (target != null && target.closest("#popupSettings") == null) {
+      setShowSettings(false);
+      document.removeEventListener("click", closePopup);
+    }
+  };
 
-    //   if (e.target.closest("popupSettings")) {
-    //     setShowSettings(false);
-    //     document.removeEventListener("click", outsideClickHandler);
-    //   }
-    // };
+  const openSettings = (e: React.MouseEvent) => {
+    if (showSettings) {
+      setShowSettings(false);
+    } else {
+      setShowSettings(true);
 
-    // document.addEventListener("click", outsideClickHandler);
+      if (process.browser) {
+        document.addEventListener("click", closePopup);
+        e.stopPropagation();
+      }
+    }
   };
 
   if (!isAuth) {
