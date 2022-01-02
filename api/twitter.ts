@@ -23,7 +23,7 @@ interface SignatureParams {
   oauth_timestamp: string;
   oauth_token: string;
   oauth_version: string;
-  status: string;
+  [key: string]: string;
 }
 
 export const statusesUpdate = async (
@@ -33,20 +33,36 @@ export const statusesUpdate = async (
   const url = "https://api.twitter.com/1.1/statuses/update.json";
   const data = `status=${encodeURIComponent(status)}`;
   const configs = {
-    headers: generateHeaders("POST", url, status, credentials),
+    headers: generateHeaders("POST", url, { status }, credentials),
   };
 
   return await axios.post(url, data, configs);
 };
 
+export const getList = async (list_id: string, credentials: credentials) => {
+  const url = `https://api.twitter.com/1.1/lists/statuses.json`;
+  const params = {
+    list_id,
+  };
+
+  const configs = {
+    headers: generateHeaders("GET", url, params, credentials),
+    params,
+  };
+
+  return await axios.get(url, configs);
+};
+
 const generateHeaders = (
   method: string,
   url: string,
-  status: string,
+  data: {
+    [key: string]: string;
+  },
   credentials: credentials
 ) => {
   const params: SignatureParams = {
-    status,
+    ...data,
     oauth_consumer_key: process.env.CONSUMER_KEY as string,
     oauth_nonce: generateRandomString(42),
     oauth_signature_method: "HMAC-SHA1",
@@ -69,11 +85,7 @@ const generateHeaders = (
 
   const authorizationStr =
     "OAuth " +
-    (
-      Object.keys(
-        authorizationParams as Authorization
-      ) as (keyof Authorization)[]
-    )
+    (Object.keys(authorizationParams) as (keyof Authorization)[])
       .map(
         (key) =>
           `${encodeURIComponent(key)}="${encodeURIComponent(
