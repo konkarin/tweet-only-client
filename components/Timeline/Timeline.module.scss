@@ -1,0 +1,34 @@
+.timeline {
+}
+
+.timeline__tweetContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgb(56, 68, 77);
+}
+
+.timeline__iconWrapper {
+  margin-right: 12px;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.timeline__icon {
+  border-radius: 100%;
+}
+
+.timeline__tweet {
+  font-size: 14px;
+  color: #fff;
+}
+
+.timeline__tweetText {
+}
+
+.timeline__tweetControl {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
