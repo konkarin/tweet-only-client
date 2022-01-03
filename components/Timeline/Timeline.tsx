@@ -5,6 +5,7 @@ import styles from "./Timeline.module.scss";
 import Heart from "../svg/Heart";
 import Retweet from "../svg/Retweet";
 import Reply from "../svg/Reply";
+import Dots from "../svg/Dots";
 
 interface Props {
   user: User;
@@ -27,32 +28,44 @@ export default function Timeline({ user }: Props) {
   if (!data) return <div>loading...</div>;
 
   const tweets = data.data.result;
+  console.log(tweets);
+
+  const filterdTweets = tweets.filter((item: any) => {
+    return item.retweeted_status === undefined;
+  });
 
   return (
     <ul className={styles.timeline}>
-      {tweets.map((item: any) => (
+      {filterdTweets.map((item: any) => (
         <li className={styles.timeline__tweetContainer} key={item.id_str}>
           <div className={styles.timeline__iconWrapper}>
             <img
               className={styles.timeline__icon}
-              src="https://pbs.twimg.com/profile_images/1319312049957007363/GAY0jYhG_normal.jpg"
-              alt=""
+              src={item.user.profile_image_url_https}
+              alt={item.user.name}
             />
           </div>
           <div className={styles.timeline__tweet}>
             <div className={styles.timeline__tweetText}>{item.text}</div>
+            {/* TODO: 画像表示 */}
             <div className={styles.timeline__tweetControl}>
-              <div>
+              <div className={styles.timeline__icon}>
                 <Reply />
               </div>
-              <div>
+              <div className={styles.timeline__icon}>
                 <Heart />
+                <span className={styles.timline__iconCount}>
+                  {item.favorite_count}
+                </span>
               </div>
-              <div>
+              <div className={styles.timeline__icon}>
                 <Retweet />
+                <span className={styles.timline__iconCount}>
+                  {item.retweet_count}
+                </span>
               </div>
-              <div>
-                <Heart />
+              <div className={styles.timeline__icon}>
+                <Dots />
               </div>
             </div>
           </div>
