@@ -3,6 +3,11 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 8px;
+  border-bottom: 1px solid #38444d;
+  position: sticky;
+  top: 0;
+  background-color: #15202b;
+  z-index: 10;
 }
 
 .header__settings {
