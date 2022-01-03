@@ -1,12 +1,12 @@
 .tweetForm {
   padding: 0 14px;
+  position: sticky;
 }
 
 .tweetForm__formWrapper {
   margin-top: 12px;
   padding: 10px;
   border-radius: 4px;
-  border-bottom: 1px solid #38444d;
   display: flex;
   flex-direction: column;
 }
@@ -21,26 +21,32 @@
   line-break: anywhere;
 }
 
-.tweetForm__count {
-  display: flex;
-  width: 100%;
-  margin-right: 8 px;
-  justify-content: flex-end;
-}
-
-.tweetForm__count--over {
-  color: rgb(244, 33, 46);
-}
-
 .tweetForm__controlWrapper {
   margin-top: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .tweetForm__control {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: 100%;
+  padding: 0 12px;
+}
+
+.tweetForm__button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tweetForm__count {
+  margin-right: 8px;
+}
+
+.tweetForm__count--over {
+  color: rgb(244, 33, 46);
 }

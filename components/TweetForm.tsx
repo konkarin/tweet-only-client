@@ -2,9 +2,9 @@ import { User } from "@firebase/auth";
 import axios from "axios";
 import { useState } from "react";
 import styles from "../styles/TweetForm.module.scss";
-import IconList from "./IconList";
 import Button from "./Button/Button";
 import classNames from "classnames";
+import Photo from "./svg/Photo";
 
 interface Props {
   user: User;
@@ -41,7 +41,6 @@ export default function TweetForm({ user }: Props) {
   return (
     <form onSubmit={post}>
       <div className={styles.tweetForm}>
-        {/* textarea */}
         <div className={styles.tweetForm__formWrapper}>
           <textarea
             value={inputValue}
@@ -49,13 +48,16 @@ export default function TweetForm({ user }: Props) {
             className={styles.tweetForm__textarea}
             placeholder="What's the point of tweeting?"
           />
-          <div className={counterClass}>{140 - inputValue.length}</div>
         </div>
-        {/* control */}
         <div className={styles.tweetForm__controlWrapper}>
-          <div className={styles.tweetForm__control}></div>
-          <div>
-            <Button type="submit">Tweet</Button>
+          <div className={styles.tweetForm__control}>
+            <Photo />
+          </div>
+          <div className={styles.tweetForm__button}>
+            <div className={counterClass}>{140 - inputValue.length}</div>
+            <Button type="submit" thin>
+              Tweet
+            </Button>
           </div>
         </div>
       </div>
