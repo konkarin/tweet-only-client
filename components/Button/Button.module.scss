@@ -6,8 +6,8 @@
   color: #fff;
   font-weight: 700;
   text-align: center;
-  min-width: 36px;
-  min-height: 36px;
+  min-width: 32px;
+  min-height: 32px;
   flex-grow: 1;
   &:active {
     background-color: rgb(204, 170, 0);
@@ -21,4 +21,8 @@
   &:active {
     background-color: rgb(52, 43, 0);
   }
+}
+
+.button--thin {
+  line-height: 1;
 }

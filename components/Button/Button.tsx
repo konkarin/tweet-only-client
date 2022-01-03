@@ -6,11 +6,19 @@ interface Props {
   type: "button" | "submit" | "reset" | undefined;
   outline?: boolean;
   onClick?: () => void | Promise<void>;
+  thin?: boolean;
 }
 
-export default function Button({ type, children, onClick, outline }: Props) {
+export default function Button({
+  type,
+  children,
+  onClick,
+  outline,
+  thin,
+}: Props) {
   const buttonClass = classNames(styles.button, {
     [styles["button--outline"]]: outline,
+    [styles["button--thin"]]: thin,
   });
 
   if (onClick == null) {
