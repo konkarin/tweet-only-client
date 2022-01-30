@@ -7,7 +7,8 @@ interface Props {
 }
 
 export default function IconList({ urls }: Props) {
-  const { currentUserIndex } = useContext(UserContext);
+  const { currentUserIndex, setCurrentUserIndex } = useContext(UserContext);
+
   const imgClass = (index: number) => {
     return classNames(styles.iconList__icon, {
       [styles["iconList__icon--active"]]: currentUserIndex === index,
@@ -19,14 +20,13 @@ export default function IconList({ urls }: Props) {
       {urls.map((item, index) => {
         return (
           <li key={item} className={styles.iconList__item}>
-            {/* TODO: ユーザーの変更 */}
             <input
               type="radio"
               name="user"
               id={"user" + index.toString()}
               value={index}
               checked={currentUserIndex === index}
-              // onChange={() => setCurrentUserIndex(index)}
+              onChange={() => setCurrentUserIndex(index)}
               className={styles.iconList__itemButton}
             />
             <label
