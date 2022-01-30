@@ -22,10 +22,14 @@ export default function Timeline({ user }: Props) {
     return result;
   };
 
-  const { data, error } = useSWR("/api/list", getList);
+  const { data, error } = useSWR("timeline", getList, {
+    // refreshInterval: 60000,
+    // DEBUG:
+    refreshInterval: 6000000,
+  });
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (error) return <div className={styles.timeline}>Failed fetch</div>;
+  if (!data) return <div className={styles.timeline}>loading...</div>;
 
   const tweets = data.data.result;
   console.log(tweets);

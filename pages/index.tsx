@@ -1,23 +1,21 @@
 import Head from "next/head";
 
-import { loginTwitter, logoutTwitter } from "../firebase/auth";
+import { loginTwitter } from "../firebase/auth";
 import { useUser } from "../hooks/user";
 import styles from "../styles/Home.module.scss";
 import TheHeader from "../components/TheHeader/TheHeader";
 import TweetForm from "../components/TweetForm";
 import Timeline from "../components/Timeline/Timeline";
 import Button from "../components/Button/Button";
+import UserStateProvider from "../context/user";
 
 export default function Home() {
   const user = useUser();
+
   const isAuth = user !== null;
 
   const login = async () => {
     await loginTwitter();
-  };
-
-  const logout = async () => {
-    await logoutTwitter();
   };
 
   return (
@@ -28,12 +26,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <TheHeader user={user} />
       <main className={styles.main}>
         {isAuth ? (
           <>
-            <TweetForm user={user} />
-            <Timeline user={user} />
+            <UserStateProvider>
+              <TheHeader />
+              <TweetForm user={user} />
+              <Timeline user={user} />
+            </UserStateProvider>
           </>
         ) : (
           <div className={styles.main__unAuth}>

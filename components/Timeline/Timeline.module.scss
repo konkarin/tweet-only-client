@@ -1,11 +1,12 @@
 .timeline {
-  margin-top: 16px;
   overflow-y: scroll;
 }
 
 .timeline__tweetContainer {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+  gap: 0 12px;
   padding: 10px 12px;
   border-bottom: 1px solid rgb(56, 68, 77);
   &:first-child {
@@ -14,7 +15,6 @@
 }
 
 .timeline__iconWrapper {
-  margin-right: 12px;
   flex-shrink: 0;
   width: 32px;
   height: 32px;
@@ -25,9 +25,12 @@
 }
 
 .timeline__tweet {
+  display: flex;
+  flex-direction: column;
+  gap: 12px 0;
+  flex-grow: 1;
   font-size: 14px;
   color: #fff;
-  flex-grow: 1;
 }
 
 .timeline__tweetText {
@@ -37,15 +40,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 12px;
 }
 
 .timeline__icon {
   display: flex;
+  gap: 0 2px;
   height: 100%;
 }
 
 .timline__iconCount {
-  margin-left: 2px;
   color: #aab8c2;
 }
