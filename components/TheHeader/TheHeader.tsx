@@ -7,11 +7,11 @@ export default function TheHeader() {
   const [showSettings, setShowSettings] = useState(false);
 
   const closePopup = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-
-    if (target != null && target.closest("#popupSettings") == null) {
-      setShowSettings(false);
-      document.removeEventListener("click", closePopup);
+    if (e.target instanceof HTMLElement) {
+      if (e.target.closest("#popupSettings") == null) {
+        setShowSettings(false);
+        document.removeEventListener("click", closePopup);
+      }
     }
   };
 
