@@ -1,23 +1,9 @@
 import Head from "next/head";
-
-import { loginTwitter } from "../firebase/auth";
-import { useUser } from "../hooks/user";
 import styles from "../styles/Home.module.scss";
-import TheHeader from "../components/TheHeader/TheHeader";
-import TweetForm from "../components/TweetForm";
-import Timeline from "../components/Timeline/Timeline";
-import Button from "../components/Button/Button";
 import UserStateProvider from "../context/user";
+import Auth from "../components/Auth/Auth";
 
 export default function Home() {
-  const user = useUser();
-
-  const isAuth = user !== null;
-
-  const login = async () => {
-    await loginTwitter();
-  };
-
   return (
     <div className={styles.container}>
       <Head>
@@ -27,23 +13,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {isAuth ? (
-          <>
-            <UserStateProvider>
-              <TheHeader />
-              <TweetForm user={user} />
-              <Timeline user={user} />
-            </UserStateProvider>
-          </>
-        ) : (
-          <div className={styles.main__unAuth}>
-            <div className={styles.main__button}>
-              <Button onClick={login} type="button" outline>
-                Log in
-              </Button>
-            </div>
-          </div>
-        )}
+        <UserStateProvider>
+          <Auth />
+        </UserStateProvider>
       </main>
     </div>
   );

@@ -1,4 +1,3 @@
-import { User } from "@firebase/auth";
 import axios from "axios";
 import { useState } from "react";
 import styles from "../styles/TweetForm.module.scss";
@@ -6,24 +5,30 @@ import Button from "./Button/Button";
 import classNames from "classnames";
 import Photo from "./svg/Photo";
 import IconList from "./IconList";
+import { UserContextType } from "../context/user";
+import { User } from "firebase/auth";
 
-interface Props {
+interface Props extends UserContextType {
   user: User;
 }
 
-// DEBUG:
+// TODO: ユーザーデータをどっかで管理、Firestoreが無難だけどメンディー
 const urls = [
   "https://pbs.twimg.com/profile_images/1319312049957007363/GAY0jYhG_normal.jpg",
   "https://pbs.twimg.com/profile_images/1147809083669413888/1vo1ib0O_normal.png",
 ];
 
-export default function TweetForm({ user }: Props) {
+export default function TweetForm({
+  user,
+  currentUserIndex,
+  setCurrentUserIndex,
+}: Props) {
   const [inputValue, setInputValue] = useState("");
 
   const post = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user || inputValue === "") return;
+    if (inputValue === "") return;
     // TODO: 画像の追加
     const url = "/api/post";
     const data = {
@@ -47,7 +52,11 @@ export default function TweetForm({ user }: Props) {
 
   return (
     <>
-      <IconList urls={urls} />
+      <IconList
+        urls={urls}
+        currentUserIndex={currentUserIndex}
+        setCurrentUserIndex={setCurrentUserIndex}
+      />
       <form className={styles.tweetForm} onSubmit={post}>
         <div className={styles.tweetForm__formWrapper}>
           <textarea

@@ -1,22 +1,24 @@
 import { User } from "firebase/auth";
 import React, { createContext, useState } from "react";
-import { useUser } from "../hooks/user";
+import { useFirebaseUser } from "../hooks/user";
 
 interface Props {
   children: React.ReactNode;
 }
 
-interface ContextType {
+export interface UserContextType {
   user: User | null;
-  currentUserIndex: Number;
+  currentUserIndex: number;
   setCurrentUserIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const UserContext = createContext({} as ContextType);
+// NOTE: createContextの引数は適当でいい
+export const UserContext = createContext({} as UserContextType);
 
 export default function UserStateProvider({ children }: Props) {
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
-  const user = useUser();
+  const user = useFirebaseUser();
+  console.log("exec provider", user);
 
   return (
     <UserContext.Provider

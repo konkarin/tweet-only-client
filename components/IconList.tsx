@@ -1,14 +1,18 @@
 import classNames from "classnames";
-import { useContext } from "react";
-import { UserContext } from "../context/user";
+import { UserContextType } from "../context/user";
 import styles from "../styles/IconList.module.scss";
+
 interface Props {
   urls: string[];
+  currentUserIndex: number;
+  setCurrentUserIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function IconList({ urls }: Props) {
-  const { currentUserIndex, setCurrentUserIndex } = useContext(UserContext);
-
+export default function IconList({
+  urls,
+  currentUserIndex,
+  setCurrentUserIndex,
+}: Props) {
   const imgClass = (index: number) => {
     return classNames(styles.iconList__icon, {
       [styles["iconList__icon--active"]]: currentUserIndex === index,
