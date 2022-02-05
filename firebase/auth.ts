@@ -19,16 +19,6 @@ export const loginTwitter = async () => {
 
   if (result == null) return null;
 
-  // const credential = TwitterAuthProvider.credentialFromResult(result);
-
-  // if (credential === null) return null;
-
-  // const token = credential.accessToken;
-  // const secret = credential.secret;
-
-  // if (token == null || secret == null) return null;
-  console.log(result);
-
   return result.user;
 };
 
