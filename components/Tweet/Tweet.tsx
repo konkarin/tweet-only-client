@@ -55,13 +55,15 @@ export default function Tweet({ tweet }: Props) {
           <div className={styles.tweet__text}>{tweet.text}</div>
 
           {media === undefined ? undefined : (
-            <div className={styles.tweet__mediaContainer}>
+            <div className={styles.mediaContainer}>
               {media.map((item) => (
-                <img
-                  src={item.media_url_https}
-                  alt={item.ext_alt_text}
-                  key={item.id}
-                />
+                <div className={styles.mediaContainer__content} key={item.id}>
+                  <img
+                    className={styles.mediaContainer__img}
+                    src={item.media_url_https}
+                    alt={item.ext_alt_text}
+                  />
+                </div>
               ))}
             </div>
           )}
