@@ -24,6 +24,8 @@ export const verifyIdToken = async (idToken: string) => {
   return decodedIdToken.uid;
 };
 
+// TODO: Get token from firestore
+// Get twitter oauth token from env
 export const getCredentials = (uid: string) => {
   if (uid === process.env.UID_1) {
     return {

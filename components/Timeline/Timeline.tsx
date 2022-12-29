@@ -40,6 +40,7 @@ export default function Timeline({ user }: Props) {
 
   return (
     <ul className={styles.timeline}>
+      {/* TODO: 無限スクロール */}
       {filterdTweets.map((item: any) => (
         <li className={styles.timeline__tweetContainer} key={item.id_str}>
           <div className={styles.timeline__iconWrapper}>
@@ -52,6 +53,7 @@ export default function Timeline({ user }: Props) {
           <div className={styles.timeline__tweet}>
             <div className={styles.timeline__tweetText}>{item.text}</div>
             {/* TODO: 画像表示 */}
+            {/* TODO: OGP表示 */}
             <div className={styles.timeline__tweetControl}>
               <div className={styles.timeline__icon}>
                 <Reply />

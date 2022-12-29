@@ -45,6 +45,10 @@ export const getList = async (list_id: string, credentials: credentials) => {
     list_id,
     count: "50",
     include_rts: "false",
+    // TODO: 無限スクロール
+    // max_od,
+    // TODO: 引っ張って更新
+    // since_id,
   };
 
   const configs = {
