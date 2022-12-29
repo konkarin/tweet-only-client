@@ -31,7 +31,7 @@ export default async function handler(
 
   const credentials = getCredentials(uid);
 
-  const listId = process.env.LIST_ID as string;
+  const listId = process.env.LIST_ID;
 
   const result = await getList(listId, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);
