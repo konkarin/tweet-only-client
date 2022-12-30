@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { UserContextType } from "../context/user";
 import styles from "../styles/IconList.module.scss";
 
 interface Props {

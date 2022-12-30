@@ -1,0 +1,57 @@
+.timeline__item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgb(56, 68, 77);
+  &:first-child {
+    border-top: 1px solid rgb(56, 68, 77);
+  }
+}
+
+.userIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.userIcon__img {
+  border-radius: 100%;
+  display: flex;
+  gap: 0 2px;
+  height: 100%;
+}
+
+.tweetContainer {
+}
+
+.tweetInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.tweetInfo__time {
+  font-size: 14px;
+}
+
+.tweet__text {
+  font-size: 16px;
+  color: #fff;
+}
+
+.mediaContainer {
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+  gap: 4px;
+}
+
+.mediaContainer__content {
+}
+
+.mediaContainer__img {
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+}
