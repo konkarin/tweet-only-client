@@ -1,16 +1,17 @@
 import classNames from "classnames";
-import { User } from "firebase/auth";
-import { useState } from "react";
 import styles from "../styles/IconList.module.scss";
 
 interface Props {
   urls: string[];
-  user: User;
+  currentUserIndex: number;
+  setCurrentUserIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function IconList({ urls, user }: Props) {
-  const [currentUserIndex, setCurrentUserIndex] = useState(0);
-
+export default function IconList({
+  urls,
+  currentUserIndex,
+  setCurrentUserIndex,
+}: Props) {
   const imgClass = (index: number) => {
     return classNames(styles.iconList__icon, {
       [styles["iconList__icon--active"]]: currentUserIndex === index,

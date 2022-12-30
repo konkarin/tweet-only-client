@@ -1,37 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { TweetV1TimelineResult } from "twitter-api-v2";
 import { getList } from "../../api/twitter";
 import { getCredentials, verifyIdToken } from "../../firebase/admin";
 
-interface Data {
+export type ListData = {
   message: string;
   error?: {
     code: number;
     message: string;
   };
-  result?: any;
-}
-
-interface Body {
-  status: string;
-  idToken: string;
-}
+  result?: TweetV1TimelineResult;
+};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ListData>
 ) {
-  const { idToken } = req.body as Body;
+  const { id_token, user_index: userIndex } = req.query;
 
-  const uid = await verifyIdToken(idToken);
+  const uid = await verifyIdToken(id_token as string).catch((e) => {
+    console.error(e);
+    return "";
+  });
 
   if (uid === "") {
     res.status(403).json({ message: "Forbidden" });
     return;
   }
 
-  const credentials = getCredentials(uid);
+  const credentials = getCredentials(uid, Number(userIndex));
 
-  const listId = process.env.LIST_ID as string;
+  const listId = process.env.LIST_ID;
 
   const result = await getList(listId, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);

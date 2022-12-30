@@ -1,13 +1,9 @@
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 8px;
   border-bottom: 1px solid #38444d;
-  position: sticky;
-  top: 0;
-  background-color: #15202b;
-  z-index: 10;
 }
 
 .header__settings {
@@ -18,6 +14,12 @@
 
 .header__settingsButton {
   display: inline-flex;
+  &:focus {
+    outline: none;
+  }
+  &:focus-visible {
+    outline: currentColor solid 2px;
+  }
 }
 
 .settingsPopup {
@@ -26,6 +28,7 @@
   right: 0;
   box-shadow: rgb(136 153 166 / 20%) 0px 0px 15px,
     rgb(136 153 166 / 15%) 0px 0px 3px 1px;
+  background-color: var(--c-bg);
 }
 
 .settingsPopup__item {
@@ -35,7 +38,7 @@
   display: flex;
   flex-direction: row;
   padding: 14px;
-
+  gap: 8px 0;
   &:hover {
     background-color: rgb(25, 39, 52);
   }
@@ -43,7 +46,6 @@
 
 .settingsPopup__linkIcon {
   display: flex;
-  margin-right: 8px;
 }
 
 .settingsPopup__linkText {

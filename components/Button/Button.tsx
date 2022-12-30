@@ -7,6 +7,7 @@ interface Props {
   outline?: boolean;
   onClick?: () => void | Promise<void>;
   thin?: boolean;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -15,23 +16,20 @@ export default function Button({
   onClick,
   outline,
   thin,
+  disabled,
 }: Props) {
   const buttonClass = classNames(styles.button, {
     [styles["button--outline"]]: outline,
     [styles["button--thin"]]: thin,
   });
-
-  if (onClick == null) {
-    return (
-      <button className={buttonClass} type={type}>
-        {children}
-      </button>
-    );
-  } else {
-    return (
-      <button className={buttonClass} type={type} onClick={onClick}>
-        {children}
-      </button>
-    );
-  }
+  return (
+    <button
+      className={buttonClass}
+      type={type}
+      disabled={disabled}
+      onClick={onClick || (() => {})}
+    >
+      {children}
+    </button>
+  );
 }

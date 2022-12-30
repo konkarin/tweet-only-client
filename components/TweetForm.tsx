@@ -1,33 +1,50 @@
-import { User } from "@firebase/auth";
 import axios from "axios";
 import { useState } from "react";
+import classNames from "classnames";
+import { User } from "firebase/auth";
+
 import styles from "../styles/TweetForm.module.scss";
 import Button from "./Button/Button";
-import classNames from "classnames";
 import Photo from "./svg/Photo";
+import IconList from "./IconList";
+import { UserContextType } from "../context/user";
 
-interface Props {
+interface Props extends UserContextType {
   user: User;
 }
 
-export default function TweetForm({ user }: Props) {
+// TODO: ユーザーデータをどっかで管理、Firestoreが無難だけどメンディー
+const urls = [
+  "https://pbs.twimg.com/profile_images/1548672763216687106/L79uf1MV_normal.jpg",
+  "https://pbs.twimg.com/profile_images/1580568917830905857/Or0K4zLj_normal.jpg",
+];
+
+export default function TweetForm({
+  user,
+  currentUserIndex,
+  setCurrentUserIndex,
+}: Props) {
   const [inputValue, setInputValue] = useState("");
 
-  const post = async (e: React.FormEvent<HTMLFormElement>) => {
+  const postTweet = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user || inputValue === "") return;
+    if (inputValue === "") return;
 
+    // TODO: 画像の追加
     const url = "/api/post";
     const data = {
       idToken: await user.getIdToken(),
       status: inputValue,
+      userIndex: currentUserIndex,
     };
 
-    const result = await axios.post(url, data).catch((e) => e);
-    console.log(result);
-
-    setInputValue("");
+    try {
+      await axios.post(url, data);
+      setInputValue("");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -39,8 +56,13 @@ export default function TweetForm({ user }: Props) {
   });
 
   return (
-    <form onSubmit={post}>
-      <div className={styles.tweetForm}>
+    <>
+      <IconList
+        urls={urls}
+        currentUserIndex={currentUserIndex}
+        setCurrentUserIndex={setCurrentUserIndex}
+      />
+      <form className={styles.tweetForm} onSubmit={postTweet}>
         <div className={styles.tweetForm__formWrapper}>
           <textarea
             value={inputValue}
@@ -50,17 +72,17 @@ export default function TweetForm({ user }: Props) {
           />
         </div>
         <div className={styles.tweetForm__controlWrapper}>
-          <div className={styles.tweetForm__control}>
+          <button className={styles.tweetForm__control}>
             <Photo />
-          </div>
+          </button>
           <div className={styles.tweetForm__button}>
             <div className={counterClass}>{140 - inputValue.length}</div>
-            <Button type="submit" thin>
+            <Button type="submit" disabled={inputValue.length === 0} thin>
               Tweet
             </Button>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
