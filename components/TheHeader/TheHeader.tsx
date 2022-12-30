@@ -1,7 +1,9 @@
+import React, { useState } from "react";
+
 import styles from "./TheHeader.module.scss";
 import Settings from "../svg/Settings";
-import React, { useState } from "react";
 import Logout from "../svg/Logout";
+import { logoutTwitter } from "../../firebase/auth";
 
 export default function TheHeader() {
   const [showSettings, setShowSettings] = useState(false);
@@ -39,7 +41,10 @@ export default function TheHeader() {
         {showSettings ? (
           <ul className={styles.settingsPopup}>
             <li className={styles.settingsPopup__item}>
-              <button className={styles.settingsPopup__link}>
+              <button
+                className={styles.settingsPopup__link}
+                onClick={logoutTwitter}
+              >
                 <span className={styles.settingsPopup__linkIcon}>
                   <Logout color="#fff" />
                 </span>

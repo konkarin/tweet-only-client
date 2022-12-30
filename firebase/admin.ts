@@ -26,13 +26,20 @@ export const verifyIdToken = async (idToken: string) => {
 
 // TODO: Get token from firestore
 // Get twitter oauth token from env
-export const getCredentials = (uid: string) => {
-  if (uid === process.env.UID_1) {
+export const getCredentials = (uid: string, userIndex: number) => {
+  if (uid !== process.env.UID_1 && uid !== process.env.UID_2) {
+    return {
+      token: "",
+      secret: "",
+    };
+  }
+
+  if (userIndex === 0) {
     return {
       token: process.env.OAUTH_TOKEN_1,
       secret: process.env.OAUTH_TOKEN_SECRET_1,
     };
-  } else if (uid === process.env.UID_2) {
+  } else if (userIndex === 1) {
     return {
       token: process.env.OAUTH_TOKEN_2,
       secret: process.env.OAUTH_TOKEN_SECRET_2,

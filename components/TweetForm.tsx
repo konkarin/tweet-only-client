@@ -30,17 +30,21 @@ export default function TweetForm({
     e.preventDefault();
 
     if (inputValue === "") return;
+
     // TODO: 画像の追加
     const url = "/api/post";
     const data = {
       idToken: await user.getIdToken(),
       status: inputValue,
+      userIndex: currentUserIndex,
     };
 
-    const result = await axios.post(url, data).catch((e) => e);
-    console.log(result);
-
-    setInputValue("");
+    try {
+      await axios.post(url, data);
+      setInputValue("");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

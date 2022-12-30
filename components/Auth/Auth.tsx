@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { UserContext } from "../../context/user";
 import { loginTwitter } from "../../firebase/auth";
 import styles from "./Auth.module.scss";
@@ -8,12 +9,11 @@ import TweetForm from "../TweetForm";
 import Button from "../Button/Button";
 
 export default function Auth() {
-  console.log("Auth");
-
   const context = useContext(UserContext);
 
   const login = async () => {
     await loginTwitter();
+    // NOTE: Store token
   };
 
   if (context.user == null) {
