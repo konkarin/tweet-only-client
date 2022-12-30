@@ -24,5 +24,4 @@ export const loginTwitter = async () => {
 
 export const logoutTwitter = async () => {
   await auth.signOut();
-  console.log("sign out");
 };

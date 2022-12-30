@@ -18,7 +18,6 @@ export const UserContext = createContext({} as UserContextType);
 export default function UserStateProvider({ children }: Props) {
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const user = useFirebaseUser();
-  console.log("exec provider", user);
 
   return (
     <UserContext.Provider
