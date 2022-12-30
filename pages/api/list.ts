@@ -16,7 +16,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ListData>
 ) {
-  const { id_token } = req.query;
+  const { id_token, user_index: userIndex } = req.query;
 
   const uid = await verifyIdToken(id_token as string).catch((e) => {
     console.error(e);
@@ -28,7 +28,7 @@ export default async function handler(
     return;
   }
 
-  const credentials = getCredentials(uid);
+  const credentials = getCredentials(uid, Number(userIndex));
 
   const listId = process.env.LIST_ID;
 

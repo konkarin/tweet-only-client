@@ -5,16 +5,21 @@ import type { User } from "firebase/auth";
 import styles from "./Timeline.module.scss";
 import Tweet from "../Tweet/Tweet";
 import { ListData } from "../../pages/api/list";
+import { useContext } from "react";
+import { UserContext } from "../../context/user";
 
 type Props = {
   user: User;
 };
 
 export default function Timeline({ user }: Props) {
+  const context = useContext(UserContext);
+
   const getList = async () => {
     const url = "/api/list";
     const params = {
       id_token: await user.getIdToken(),
+      user_index: context.currentUserIndex,
     };
 
     const result = await axios.get<ListData>(url, { params }).catch(() => {
@@ -35,7 +40,6 @@ export default function Timeline({ user }: Props) {
     return <div className={styles.timeline}>loading...</div>;
 
   const tweets = data.result;
-  console.log(tweets);
 
   const filterdTweets = tweets.filter((tweet) => {
     return tweet.retweeted_status === undefined;

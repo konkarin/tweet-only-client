@@ -15,13 +15,14 @@ interface Data {
 interface Body {
   status: string;
   idToken: string;
+  userIndex: number;
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { status, idToken } = req.body as Body;
+  const { status, idToken, userIndex } = req.body as Body;
 
   const uid = await verifyIdToken(idToken);
 
@@ -30,7 +31,7 @@ export default async function handler(
     return;
   }
 
-  const credentials = getCredentials(uid);
+  const credentials = getCredentials(uid, userIndex);
 
   const result = await statusesUpdate(status, credentials).catch((e) => {
     console.error(e.response.data, e.response.config);
